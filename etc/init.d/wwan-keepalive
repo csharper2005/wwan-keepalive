@@ -1,0 +1,19 @@
+#!/bin/sh /etc/rc.common
+# wwan-keepalive
+# Copyright (C) 2021 csharper2005
+
+START=99
+
+USE_PROCD=1
+NAME=wwan-keepalive
+PROG=/usr/sbin/wwan-check
+
+start_service() {
+	procd_open_instance
+	procd_set_param command "$PROG"
+	procd_close_instance
+}
+
+reload_service() {
+	procd_send_signal $PROG
+}
