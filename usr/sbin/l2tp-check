@@ -1,0 +1,45 @@
+#!/bin/sh
+# SPDX-License-Identifier: GPL-2.0-or-later
+#
+# Copyright (c) 2021 csharper2005
+#
+###
+### Checks internet connection and restarts
+### L2TP interface if internet has lost
+###
+
+# Common vars
+CHECK_IP="8.8.8.8"
+L2TP_IFACE="L2TP"
+L2TP_DEV="l2tp0"
+PING_MAX_RETRIES=3
+
+# Wait a bit
+sleep 60
+
+fails_counter=0
+
+# Main loop
+while [ true ]; do
+	if [ $fails_counter -eq $PING_MAX_RETRIES ]; then
+		kernel_err=$(dmesg | grep "Not tainted")
+		if [ ! -z "$kernel_err" ]; then
+			reboot
+		fi
+		logger "[${0##*/}] Ping $CHECK_IP failed $PING_MAX_RETRIES times"
+		ubus -S call network.interface.$L2TP_IFACE down >/dev/null 2>&1
+		sleep 5
+		ubus -S call network.interface.$L2TP_IFACE up >/dev/null 2>&1
+		logger "[${0##*/}] Interface $L2TP_IFACE has been restarted"
+		sleep 5
+	fi
+	sleep 5
+	fails_counter=0
+	while [ $fails_counter -lt $PING_MAX_RETRIES ]; do
+		if /bin/ping -I $L2TP_DEV -c 1 $CHECK_IP >/dev/null 2>&1
+		then
+			break
+		fi
+		fails_counter=$((fails_counter+1))
+	done
+done

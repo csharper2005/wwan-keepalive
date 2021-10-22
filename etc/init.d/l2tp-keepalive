@@ -1,0 +1,19 @@
+#!/bin/sh /etc/rc.common
+# l2tp-keepalive
+# Copyright (C) 2021 csharper2005
+
+START=99
+
+USE_PROCD=1
+NAME=l2tp-keepalive
+PROG=/usr/sbin/l2tp-check
+
+start_service() {
+	procd_open_instance
+	procd_set_param command "$PROG"
+	procd_close_instance
+}
+
+reload_service() {
+	procd_send_signal $PROG
+}
