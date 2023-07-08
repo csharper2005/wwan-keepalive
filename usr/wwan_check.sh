@@ -7,8 +7,13 @@
 #
 #   Copyright (C) 2023 Mikhail Zhilkin <csharper2005@gmail.com>
 #
-# NOTE: Add this script to the cron (runs every 5 min here):
-# */5 * * * * /root/scripts/wwan_check.sh
+# HOWTO:
+# 1. Copy wwan_check.sh to /root/scripts
+# 2. Make the script executable:
+#    chmod a+x /root/scripts/wwan_check.sh
+# 3. Edit common vars if it's necessary
+# 4. Add this line to the cron (to run every 5 min):
+#    */5 * * * * /root/scripts/wwan_check.sh
 
 ### Common vars
 ## IP to check
