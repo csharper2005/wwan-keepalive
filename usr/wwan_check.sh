@@ -29,6 +29,10 @@ MODEM_RESTART_CMD="AT+CFUN=1,1\r"
 #MODEM_TTY="/dev/ttyUSB2"
 MODEM_TTY="/dev/ttyACM2"
 
+up=$(awk -F. '{print $1}' /proc/uptime)
+[ $up -lt 180 ] && \
+	logger "[${0##*/}] Uptime is less than 3 min. Check skipped." && exit 0
+ 
 fails=0
 while [ $fails -ne $PING_MAX_RETRIES ]; do
 	/bin/ping -I $WWAN_DEV -c 1 $CHECK_IP >/dev/null 2>&1
