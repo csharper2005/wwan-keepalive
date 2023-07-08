@@ -7,7 +7,7 @@
 #
 #   Copyright (C) 2023 Mikhail Zhilkin <csharper2005@gmail.com>
 #
-# NOTE: Add this script to the cron (runs every 5 min there):
+# NOTE: Add this script to the cron (runs every 5 min here):
 # */5 * * * * /root/scripts/wwan_check.sh
 
 ### Common vars
