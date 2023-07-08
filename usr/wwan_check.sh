@@ -7,13 +7,13 @@
 #
 #   Copyright (C) 2023 Mikhail Zhilkin <csharper2005@gmail.com>
 #
-# NOTE: Add this script to cron (runs every 5 min in this example):
+# NOTE: Add this script to the cron (runs every 5 min there):
 # */5 * * * * /root/scripts/wwan_check.sh
 
 ### Common vars
 ## IP to check
 CHECK_IP="8.8.8.8"
-## Your WWAN interface
+## WWAN interface
 WWAN_DEV="eth2"
 ## Retries count
 PING_MAX_RETRIES=3
